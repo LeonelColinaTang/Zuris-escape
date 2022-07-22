@@ -26,6 +26,7 @@
     "core-js": "^3.23.5",
     "css-loader": "^6.7.1",
     "mini-css-extract-plugin": "^2.6.1",
+    "random-words": "^1.2.0",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
@@ -36,4 +37,3 @@
     "defaults"
   ]
 }
-
