@@ -1,8 +1,18 @@
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
+#canvas1 {
+  height: 700px;
+  width: 800px;
+  border: 2px solid #BEB8B1;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 45%;
+  left: 50%;
+}
+
 body {
-  background-color: lightblue;
+  background-color: #000;
 }
 
 #main {
@@ -19,27 +29,19 @@ body {
     text-shadow: 0px 0px 5px #FFFF00;
   }
   50% {
-    text-shadow: 0px 0px 14px #0000FF;
+    text-shadow: 0px 0px 14px red;
   }
   100% {
     text-shadow: 0px 0px 5px #FFFF00;
   }
 }
-#canvas-container {
-  background-color: #B5C9D5;
-  height: 400px;
-  width: 800px;
-  border: 2px solid #BEB8B1;
-  margin: auto;
-}
-
 #word-container {
   display: flex;
   justify-content: center;
   margin: auto;
   height: 60px;
   width: 300px;
-  margin-top: 30px;
+  margin-top: 80px;
   text-align: center;
 }
 
@@ -54,18 +56,26 @@ body {
   margin: 5px;
   border-radius: 10px;
   background-color: lightgreen;
+  transition: 0.2s;
 }
 
-.letter-success {
+.great {
   color: #fff;
-  font-size: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
   border: 1px solid lightblue;
-  margin: 5px;
-  border-radius: 10px;
   background-color: lightblue;
+  animation-name: great;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+}
+
+@keyframes great {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

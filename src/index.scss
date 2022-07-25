@@ -1,6 +1,6 @@
 @import "./styles/example.scss";
 body{
-    background-color: lightblue;
+    background-color: #000;
 }
 
 
@@ -8,14 +8,12 @@ body{
 
 #main {
     // color: $color;
-    // color: #748A9E;
     color: #fff;
     width: 100%;
     text-align: center;
     animation-name: glow;
     animation-duration: 2s;
     animation-iteration-count: infinite;
-    // animation-direction: alternate-reverse;
 }
 
 
@@ -25,20 +23,14 @@ body{
     }
 
     50% {
-        text-shadow: 0px 0px 14px #0000FF;
+        text-shadow: 0px 0px 14px red;
     }
     100% {
         text-shadow: 0px 0px 5px #FFFF00;
     }
 }
 
-#canvas-container{
-    background-color: #B5C9D5;
-    height: 400px;
-    width: 800px;
-    border: 2px solid #BEB8B1;
-    margin: auto;
-}
+
 
 #word-container{
     display: flex;
@@ -46,7 +38,7 @@ body{
     margin: auto;
     height: 60px;
     width: 300px;
-    margin-top: 30px;
+    margin-top: 80px;
     text-align: center;
 }
 
@@ -62,18 +54,29 @@ body{
     margin: 5px;
     border-radius: 10px;
     background-color: lightgreen;
+    transition: 0.2s;
 }
 
-.letter-success {
+.great {
     color: #fff;
-    font-size: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
     border: 1px solid lightblue;
-    margin: 5px;
-    border-radius: 10px;
     background-color: lightblue;
+    animation-name: great;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+}
+
+
+@keyframes great {
+    0% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
