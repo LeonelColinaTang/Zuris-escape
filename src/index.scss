@@ -5,9 +5,6 @@ body{
     background-color: #000;
 }
 
-
-
-
 #main {
     color: #fff;
     width: 100%;
@@ -30,6 +27,29 @@ body{
         text-shadow: 0px 0px 5px #FFFF00;
     }
 }
+
+.btn{
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    position: absolute;
+    background: lightgray;
+    border: solid 2px white;
+}
+.btn:hover{
+    background-color: gray;
+    box-shadow: 0px 0px 20px 10px white;
+}
+
+#start-button{
+    left: 20%;
+    top: 15%;
+}
+#music-button{
+    right: 20%;
+    top: 15%;
+}
+
 
 
 

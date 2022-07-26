@@ -124,7 +124,7 @@ const monsterWidth = 6876 / 12;
 const monsterHeight = 5230 / 10;
 
 //I'll create two variables to control the speed of the boy
-let moveX = 0;
+let moveX = 5;
 
 //I'll create two variables to control the speed of the monster
 let frameX = 0;
@@ -158,13 +158,12 @@ function animate() {
             moveX = 0;
         }
     }
-    gameFrame++;
 
+    gameFrame++;
     requestAnimationFrame(animate);
 };
 
-
-animate();
+// animate();
 
 
 
