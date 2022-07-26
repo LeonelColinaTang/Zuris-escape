@@ -17,13 +17,14 @@ function generateWord() {
 }
 
 //callling the function for testing purposes
-setInterval((generateWord),5000); 
+// setInterval((generateWord),5000); 
 
 function compareWord(word) {
     let i = 0;
     let count = 0;
 
     window.addEventListener('keypress', comparing); //I start listening for the input
+
     function comparing(event) {
         if (event.key === word[i]) { //If they are the same, I swap styles
             let square = document.querySelector(`#word-container :nth-child(${i + 1})`);
@@ -72,10 +73,9 @@ const backgroundLayer5 = new Image();
 backgroundLayer5.src = 'src/layer-5.png';
 
 
-
 //Here I create the temmplate of the values that every background wil have
-class Background{
-    constructor(image, speedModifier){
+class Background {
+    constructor(image, speedModifier) {
         this.x = 0;
         this.y = 0;
         this.width = 2400;
@@ -85,18 +85,18 @@ class Background{
         this.speed = gameSpeed * this.speedModifier;
     }
 
-    update(){
+    update() {
         this.speed = gameSpeed * this.speedModifier;
         if (this.x <= -this.width) this.x = 0;
         // We could get rid of the if tatement by creating a variablle outside called gameFrame.
         // this.x -= this.speed;
         //this.x = gameFrame * this.speed % this.width;
-        this.x -= this.speed;
+        this.x -= Math.floor(this.speed);
     }
 
-    draw(){
+    draw() {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        ctx.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x + this.width - this.speed, this.y, this.width, this.height);
     }
 }
 
@@ -111,39 +111,59 @@ const gameBackgrounds = [background1, background2, background3, background4, bac
 
 
 
-
-
-
-
+//Creating boy and monster
 const boy = new Image();
-boy.src = 'src/images/boy.png';
-let moveX = 0;
-let moveY = 0;
+boy.src = 'src/boy.png';
+const boyWidth = 2289/21;
+const boyHeight = 172;
+
+
+const monster = new Image();
+monster.src = 'src/images/shadow_dog.png';
+const monsterWidth = 6876 / 12;
+const monsterHeight = 5230 / 10;
 
 //I'll create two variables to control the speed of the boy
+let moveX = 0;
+
+//I'll create two variables to control the speed of the monster
+let frameX = 0;
+let frameY = 3;
+
+//two variables to control the
 let gameFrame = 0;
-const staggerFrames  = 5;
+const staggerFrames = 2;
 
 // I'm animating the backgrounds here
 function animate() {
-    ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    gameBackgrounds.forEach(function(ele){
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    gameBackgrounds.forEach(function (ele) {
         ele.update();
         ele.draw();
     })
 
-    ctx.drawImage(boy, moveX*100, moveY*137 , 100 , 137 , CANVAS_WIDTH-150 , CANVAS_HEIGHT-185 , 100 , 100);
+    // ctx.drawImage (image, cutX, cutY, cutWidth, cutHEight, startPosX, startPosY, width, height )
+    ctx.drawImage(monster, monsterWidth * frameX, frameY * monsterHeight, monsterWidth, monsterHeight, 50, 310, 200, 200); //50,310,200,200
+    ctx.drawImage(boy, boyWidth * moveX, 0, boyWidth, boyHeight, 650, 420, 100, 100);
 
-     if (gameFrame % staggerFrames === 0){
-         if (moveX < 7){
-             moveX++;
-         }else{
-             moveX = 0;
-         }
-     }
-     gameFrame++;
+    if (gameFrame % staggerFrames === 0) {
+        if (frameX < 6) {
+            frameX++;
+        } else {
+            frameX = 0;
+        }
+        if (moveX < 20) {
+            moveX++;
+        } else {
+            moveX = 0;
+        }
+    }
+    gameFrame++;
+
     requestAnimationFrame(animate);
 };
+
+
 animate();
 
 
