@@ -17,7 +17,6 @@ function generateWord() {
 }
 
 //callling the function for testing purposes
-// setInterval((generateWord),5000); 
 
 function compareWord(word) {
     let i = 0;
@@ -31,6 +30,7 @@ function compareWord(word) {
             square.classList.add('great');
             i++;
         } else {
+            monsterMove += 100;
             count++; //This keeps counts of the mistakes
         }
 
@@ -41,8 +41,10 @@ function compareWord(word) {
             window.removeEventListener('keypress', comparing);
         }
 
-        if (count===5) { //If there are 5 mistakes, the game is lost. This needs fixing.
+        if (count===5 || monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             alert('you have lost!');
+            staggerFrames = 0;
+            gameSpeed = 0;
             //you can move all this function down and then set gameSpeed to 0 when someone loses
             count=0;
         }
@@ -50,9 +52,6 @@ function compareWord(word) {
 }
 
 ////////////////////////////////////////////////////////////////
-
-
-
 const canvas = document.getElementById('canvas1'); //Here we create the canvas witht the width and height
 const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 800;
@@ -91,7 +90,7 @@ class Background {
         // We could get rid of the if tatement by creating a variablle outside called gameFrame.
         // this.x -= this.speed;
         //this.x = gameFrame * this.speed % this.width;
-        this.x -= Math.floor(this.speed);
+        this.x -= this.speed;
     }
 
     draw() {
@@ -113,7 +112,7 @@ const gameBackgrounds = [background1, background2, background3, background4, bac
 
 //Creating boy and monster
 const boy = new Image();
-boy.src = 'src/boy.png';
+boy.src = 'src/images/boy.png';
 const boyWidth = 2289/21;
 const boyHeight = 172;
 
@@ -123,16 +122,16 @@ monster.src = 'src/images/shadow_dog.png';
 const monsterWidth = 6876 / 12;
 const monsterHeight = 5230 / 10;
 
-//I'll create two variables to control the speed of the boy
+//I'll create one variables to control the speed of the boy
 let moveX = 5;
 
 //I'll create two variables to control the speed of the monster
 let frameX = 0;
 let frameY = 3;
-
+let monsterMove = 50;
 //two variables to control the
 let gameFrame = 0;
-const staggerFrames = 2;
+let staggerFrames = 2;
 
 // I'm animating the backgrounds here
 function animate() {
@@ -143,7 +142,8 @@ function animate() {
     })
 
     // ctx.drawImage (image, cutX, cutY, cutWidth, cutHEight, startPosX, startPosY, width, height )
-    ctx.drawImage(monster, monsterWidth * frameX, frameY * monsterHeight, monsterWidth, monsterHeight, 50, 310, 200, 200); //50,310,200,200
+    ctx.drawImage(monster, monsterWidth * frameX, frameY * monsterHeight, monsterWidth, monsterHeight, monsterMove, 310, 200, 200); //50,310,200,200
+    //boy gets caught at 550 so each mistake can add 100
     ctx.drawImage(boy, boyWidth * moveX, 0, boyWidth, boyHeight, 650, 420, 100, 100);
 
     if (gameFrame % staggerFrames === 0) {
@@ -170,9 +170,7 @@ function animate() {
 //////////////
 const musicButton = document.getElementById('music-button');
 
-console.log('hi');
 musicButton.onclick = function(){
-    // document.getElementById('game-suspense-music').setAttribute('autoplay','');
     if( musicButton.innerHTML === 'Mute'){
         document.getElementById('game-suspense-music').pause();
         musicButton.innerHTML = 'Resume';
@@ -182,11 +180,13 @@ musicButton.onclick = function(){
     }
 };
 
-const startButton = document.getElementById('start-button');
-startButton.onclick = function(){
-    document.getElementById('game-suspense-music').play();
+// const startButton = document.getElementById('start-button');
+// startButton.onclick = function(){
+    setInterval((generateWord),5000); 
+
+    // document.getElementById('game-suspense-music').play();
     animate()
-};
+// };
 
 
 
