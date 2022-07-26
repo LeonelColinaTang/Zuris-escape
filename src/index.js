@@ -1,26 +1,35 @@
 // import Example from './scripts/example';
 
 const randomWords = require('random-words'); ///require the API that will let me generate words
-
+let control = false;
 //This function generates a word
 function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
     let container = document.getElementById('word-container');
 
-    word.split("").forEach(letter => {
-        let square = document.createElement("div");
-        square.innerText = letter;
-        square.classList.add('letter');
-        container.appendChild(square);
-    });
+
+
+    if (!control){
+
+
+        word.split("").forEach(letter => {
+            let square = document.createElement("div");
+            square.innerText = letter;
+            square.classList.add('letter');
+            container.appendChild(square);
+        });
+    }
+
+
+
+
     compareWord(word);
 }
 
-//callling the function for testing purposes
-
 function compareWord(word) {
+    control = true;
     let i = 0;
-    let count = 0;
+    let count = 0; //I might not need this. Check with Kyle before deletion.
 
     window.addEventListener('keypress', comparing); //I start listening for the input
 
@@ -36,17 +45,19 @@ function compareWord(word) {
 
         if (word.length === i) { //If word completed, I remove it with the event listener until next word
             let letters = document.getElementsByClassName('letter');
-            Array.from(letters).forEach(ele => ele.remove());
             i = 0;
+            Array.from(letters).forEach(ele => ele.remove());
             window.removeEventListener('keypress', comparing);
+            control = false;
         }
 
         if (count===5 || monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
-            alert('you have lost!');
+            document.getElementById('game-suspense-music').pause();
             staggerFrames = 0;
             gameSpeed = 0;
             //you can move all this function down and then set gameSpeed to 0 when someone loses
             count=0;
+            alert('you have lost!');
         }
     }
 }
@@ -123,11 +134,11 @@ const monsterWidth = 6876 / 12;
 const monsterHeight = 5230 / 10;
 
 //I'll create one variables to control the speed of the boy
-let moveX = 5;
+let boyX = 5;
 
 //I'll create two variables to control the speed of the monster
-let frameX = 0;
-let frameY = 3;
+let monsterX = 0;
+let monsterY = 3;
 let monsterMove = 50;
 //two variables to control the
 let gameFrame = 0;
@@ -142,20 +153,20 @@ function animate() {
     })
 
     // ctx.drawImage (image, cutX, cutY, cutWidth, cutHEight, startPosX, startPosY, width, height )
-    ctx.drawImage(monster, monsterWidth * frameX, frameY * monsterHeight, monsterWidth, monsterHeight, monsterMove, 310, 200, 200); //50,310,200,200
+    ctx.drawImage(monster, monsterWidth * monsterX, monsterY * monsterHeight, monsterWidth, monsterHeight, monsterMove, 310, 200, 200); //50,310,200,200
     //boy gets caught at 550 so each mistake can add 100
-    ctx.drawImage(boy, boyWidth * moveX, 0, boyWidth, boyHeight, 650, 420, 100, 100);
+    ctx.drawImage(boy, boyWidth * boyX, 0, boyWidth, boyHeight, 650, 420, 100, 100);
 
     if (gameFrame % staggerFrames === 0) {
-        if (frameX < 6) {
-            frameX++;
+        if (monsterX < 6) {
+            monsterX++;
         } else {
-            frameX = 0;
+            monsterX = 0;
         }
-        if (moveX < 20) {
-            moveX++;
+        if (boyX < 20) {
+            boyX++;
         } else {
-            moveX = 0;
+            boyX = 0;
         }
     }
 
@@ -180,14 +191,21 @@ musicButton.onclick = function(){
     }
 };
 
-// const startButton = document.getElementById('start-button');
-// startButton.onclick = function(){
+const startButton = document.getElementById('start-button');
+startButton.onclick = function(){
     setInterval((generateWord),5000); 
 
-    // document.getElementById('game-suspense-music').play();
+    document.getElementById('game-suspense-music').play();
     animate()
-// };
+};
 
 
-
+// Instead of setInterval, call the function once and the next calls make them once the word has been completed
+// I could use a setTimeout with a random number between 1-5 seconds.
+// Why does it give me an error if I wait?
+//How do I stablish that a game was won (maybe create a variable counting X amount of words)
+//How to reset the game?
+//For the game over, I could create a div with display: none; and then whe the game is lost, change it's property?
+///How should I divide the game?
+//Should I go into promises rather than setting the chain through functions?
 
