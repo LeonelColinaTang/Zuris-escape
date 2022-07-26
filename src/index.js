@@ -62,15 +62,15 @@ let gameSpeed = 5; //This is the variabe that will define every moving object's 
 
 //Here i'm getting the background pictures
 const backgroundLayer1 = new Image();
-backgroundLayer1.src = 'src/layer-1.png';
+backgroundLayer1.src = 'src/images/layer-1.png';
 const backgroundLayer2 = new Image();
-backgroundLayer2.src = 'src/layer-2.png';
+backgroundLayer2.src = 'src/images/layer-2.png';
 const backgroundLayer3 = new Image();
-backgroundLayer3.src = 'src/layer-3.png';
+backgroundLayer3.src = 'src/images/layer-3.png';
 const backgroundLayer4 = new Image();
-backgroundLayer4.src = 'src/layer-4.png';
+backgroundLayer4.src = 'src/images/layer-4.png';
 const backgroundLayer5 = new Image();
-backgroundLayer5.src = 'src/layer-5.png';
+backgroundLayer5.src = 'src/images/layer-5.png';
 
 
 //Here I create the temmplate of the values that every background wil have
@@ -163,9 +163,30 @@ function animate() {
     requestAnimationFrame(animate);
 };
 
-// animate();
 
 
+
+
+//////////////
+const musicButton = document.getElementById('music-button');
+
+console.log('hi');
+musicButton.onclick = function(){
+    // document.getElementById('game-suspense-music').setAttribute('autoplay','');
+    if( musicButton.innerHTML === 'Mute'){
+        document.getElementById('game-suspense-music').pause();
+        musicButton.innerHTML = 'Resume';
+    }else {
+        document.getElementById('game-suspense-music').play();
+        musicButton.innerHTML = 'Mute';
+    }
+};
+
+const startButton = document.getElementById('start-button');
+startButton.onclick = function(){
+    document.getElementById('game-suspense-music').play();
+    animate()
+};
 
 
 
