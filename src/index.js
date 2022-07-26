@@ -7,11 +7,7 @@ function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
     let container = document.getElementById('word-container');
 
-
-
     if (!control){
-
-
         word.split("").forEach(letter => {
             let square = document.createElement("div");
             square.innerText = letter;
@@ -19,17 +15,12 @@ function generateWord() {
             container.appendChild(square);
         });
     }
-
-
-
-
     compareWord(word);
 }
 
 function compareWord(word) {
     control = true;
     let i = 0;
-    let count = 0; //I might not need this. Check with Kyle before deletion.
 
     window.addEventListener('keypress', comparing); //I start listening for the input
 
@@ -40,7 +31,6 @@ function compareWord(word) {
             i++;
         } else {
             monsterMove += 100;
-            count++; //This keeps counts of the mistakes
         }
 
         if (word.length === i) { //If word completed, I remove it with the event listener until next word
@@ -49,9 +39,11 @@ function compareWord(word) {
             Array.from(letters).forEach(ele => ele.remove());
             window.removeEventListener('keypress', comparing);
             control = false;
+            setTimeout((generateWord), Math.floor(Math.random()*3)*1000);
         }
-
-        if (count===5 || monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
+        // debugger
+        if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
+            // debugger
             document.getElementById('game-suspense-music').pause();
             staggerFrames = 0;
             gameSpeed = 0;
@@ -193,10 +185,10 @@ musicButton.onclick = function(){
 
 const startButton = document.getElementById('start-button');
 startButton.onclick = function(){
-    setInterval((generateWord),5000); 
+    setTimeout((generateWord),3000); 
 
     document.getElementById('game-suspense-music').play();
-    animate()
+    animate();
 };
 
 
