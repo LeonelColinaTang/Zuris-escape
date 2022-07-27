@@ -5,24 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./dist/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Rampart+One&display=swap"
+        rel="stylesheet">
     
     <title>Document</title>
 </head>
 <body>
     <div id="main">
-        <h1>Zuri's Escape</h1>
-    </div>
+        <div id="title">
+            <h1>Zuri's Escape</h1>
+        </div>
+        <div class="buttons">
+            <button id="start-button" class="btn">Start</button>
+            <button id="music-button" class="btn">Mute</button>
+        </div>
+        <div id="flex-container">
+            <div class="popup" id="welcome">
+                <p class="subtitle-text">Welcome to Zuri's Escape</p>
+                <p class="normal-text">
+                    Zuri has woken up in an enchanted forest where monsters are looming and lurking everywhere! 
+                    He managed to escape his prison but now a shadow dog is chasing him and the only way of escape 
+                    is to chant the magic words to keep shadow dog away.
+                    But there's a catch! If you fail, you will strengthen shadow dog. 
+                    You have the keys to save or doom Zuri
+                </p>
+                <p class="subtitle-text">Instructions </p>
+                <p class="normal-text">
+                    It's very easy!! You just have to type the words shown on screen.
+                </p>
+                <a href="#" class="neon-button">START THE GAME</a>
+            </div>
+            <!-- <div class="popup" id="win">
+            
+                </div>
+                <div class="popup" id="lose">
+            
+                </div> -->
 
-    <button id="start-button" class="btn">Start</button>
-    <button id="music-button" class="btn">Mute</button>
+        </div>
+        
 
-    <canvas id="canvas1">
-    </canvas>
-    <div id="word-container">
+
+
+
+
+
+
+
+    
+        <canvas id="canvas1">
+        </canvas>
+        <div id="word-container">
+        </div>
+        <audio src="src/sounds/suspense-music.mp3" loop id="game-suspense-music">
+            <p> Your browser doesn't suport audio</p>
+        </audio>
     </div>
-    <audio src="src/sounds/suspense-music.mp3" loop id="game-suspense-music">
-        <p> Your browser doesn't suport audio</p>
-    </audio>
     <script src="./dist/main.js"></script>
 </body>
 </html>

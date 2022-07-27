@@ -1,32 +1,118 @@
 @import "./styles/example.scss";
 
-
 body{
     background-color: #000;
 }
 
-#main {
-    color: #fff;
+
+#flex-container{
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    background-color: grayred;
+    margin-top: 50px;
+}
+
+
+
+
+
+
+
+
+#title{
+    font-family: 'Rampart One', cursive;
+    font-size: 20px;
+    position: absolute;
+    top: 50px;
     width: 100%;
-    text-align: center;
+    // z-index: 13;
     animation-name: glow;
     animation-duration: 2s;
     animation-iteration-count: infinite;
 }
 
-
 @keyframes glow {
     0% {
-        text-shadow: 0px 0px 5px #FFFF00;
+        text-shadow: 0px 0px 5px white;
     }
 
     50% {
         text-shadow: 0px 0px 14px red;
     }
+
     100% {
-        text-shadow: 0px 0px 5px #FFFF00;
+        text-shadow: 0px 0px 5px white;
     }
 }
+
+
+
+.popup {
+    width: 800px;
+    height: 600px;
+    position: relative;
+    margin: auto;
+    z-index: 2;
+    background-color: rgba(0,0,0,1);
+    // overflow: hidden;
+    border: 5px solid rgba(255,255,255,0.7
+    );
+    border-radius: 20px;
+    // padding: 35px;
+}
+.normal-text{
+    font-family: 'Amatic SC', cursive;
+    font-size: 32px;
+    width: 700px;
+    margin: auto;
+}
+
+.subtitle-text{
+    font-family: 'Rampart One', cursive;
+    font-size: 32px;
+}
+
+.neon-button{
+    color: #f0ffff;
+    font-family: 'Rampart One';
+    font-weight: bolder;
+    // position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    // text-transform: uppercase;
+    text-decoration: none;
+    font-size: 24px;
+    // overflow: hidden;
+    transition: 0.2s;
+    margin-top: 40px;
+}
+.neon-button:hover{
+    color: #7d7d7d;
+    background: #d3d3d3;
+    box-shadow: 0 0 10px #d3d3d3, 0 0 40px #9e9e9e, 0 0 80px #7d7d7d;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#main {
+    color: #fff;
+    width: 100%;
+    text-align: center;
+}
+
+
+
 
 .btn{
     width: 65px;

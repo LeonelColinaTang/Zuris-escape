@@ -5,6 +5,7 @@ let control = false;
 //This function generates a word
 function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
+    debugger
     let container = document.getElementById('word-container');
 
     if (!control){
@@ -21,17 +22,17 @@ function generateWord() {
 function compareWord(word) {
     control = true;
     let i = 0;
-
+    debugger
     window.addEventListener('keypress', comparing); //I start listening for the input
 
     function comparing(event) {
         let letters = document.getElementsByClassName('letter');
-        if (event.key === word[i]) { //If they are the same, I swap styles
+        if (event.key === letters[i].innerText) { //If they are the same, I swap styles
             let square = document.querySelector(`#word-container :nth-child(${i + 1})`);
             square.classList.add('great');
             i++;
         } else {
-            // debugger
+            debugger
             monsterMove += 100;
         }
 
@@ -190,6 +191,7 @@ startButton.onclick = function(){
         setTimeout(generateWord, 3000);
 
         document.getElementById('game-suspense-music').play();
+        document.getElementById('game-suspense-music').volume=0.2;
         animate();
         startButton.innerText = 'Restart';
     }else if (startButton.innerText === 'Restart'){
@@ -199,16 +201,15 @@ startButton.onclick = function(){
         staggerFrames = 2;
         gameFrame = 0;
         control = false;
-        debugger
         setTimeout(generateWord, 3000);
-        animate();
+        // animate(); if I don't do this, it will mantain the speed
+        if(musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
         document.getElementById('game-suspense-music').play();
     }
 };
 
 
 //How do I stablish that a game was won (maybe create a variable counting X amount of words)
-//How to reset the game?
 //For the game over, I could create a div with display: none; and then whe the game is lost, change it's property?
 ///How should I divide the game?
 
