@@ -161,21 +161,8 @@ function animate() {
 
 
 //////////////////////////////////////////////////////////////////////
-const musicButton = document.getElementById('music-button');
-
-musicButton.onclick = function(){
-    if( musicButton.innerHTML === 'Mute'){
-        document.getElementById('game-suspense-music').pause();
-        musicButton.innerHTML = 'Resume';
-    }else {
-        document.getElementById('game-suspense-music').play();
-        musicButton.innerHTML = 'Mute';
-    }
-};
-
 
 //How do I stablish that a game was won (maybe create a variable counting X amount of words)
-//For the game over, I could create a div with display: none; and then whe the game is lost, change it's property?
 ///How should I divide the game?
 
 const playButton = document.getElementById('play-button');
@@ -214,4 +201,15 @@ retryButton.onclick = function () {
     setTimeout(generateWord, 3000);
     if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
     document.getElementById('game-suspense-music').play();
+}
+
+let icon = document.getElementById('sound-icon');
+icon.onclick = function(){
+    icon.classList.toggle('fa-volume-up');
+    icon.classList.toggle('fa-volume-mute');
+    if (icon.classList.value === 'fas fa-volume-mute') {
+        document.getElementById('game-suspense-music').pause();
+    } else {
+        document.getElementById('game-suspense-music').play();
+    }
 }
