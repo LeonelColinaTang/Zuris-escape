@@ -5,7 +5,6 @@ let control = false;
 //This function generates a word
 function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
-    debugger
     let container = document.getElementById('word-container');
 
     if (!control){
@@ -22,17 +21,15 @@ function generateWord() {
 function compareWord(word) {
     control = true;
     let i = 0;
-    debugger
+    let letters = document.getElementsByClassName('letter');
     window.addEventListener('keypress', comparing); //I start listening for the input
 
     function comparing(event) {
-        let letters = document.getElementsByClassName('letter');
         if (event.key === letters[i].innerText) { //If they are the same, I swap styles
             let square = document.querySelector(`#word-container :nth-child(${i + 1})`);
             square.classList.add('great');
             i++;
         } else {
-            debugger
             monsterMove += 100;
         }
 
@@ -43,15 +40,12 @@ function compareWord(word) {
             control = false;
             setTimeout(generateWord, Math.floor(Math.random()*3)*1000);
         }
-        // debugger
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             document.getElementById('game-suspense-music').pause();
-            debugger
             Array.from(letters).forEach(ele => ele.remove());
             staggerFrames = 0;
             gameSpeed = 0;
-            //you can move all this function down and then set gameSpeed to 0 when someone loses
-            alert('you have lost!');
+            document.getElementById('lose').style.display = 'block';
         }
     }
 }
@@ -92,9 +86,6 @@ class Background {
     update() {
         this.speed = gameSpeed * this.speedModifier;
         if (this.x <= -this.width) this.x = 0;
-        // We could get rid of the if tatement by creating a variablle outside called gameFrame.
-        // this.x -= this.speed;
-        //this.x = gameFrame * this.speed % this.width;
         this.x -= this.speed;
     }
 
@@ -148,7 +139,6 @@ function animate() {
 
     // ctx.drawImage (image, cutX, cutY, cutWidth, cutHEight, startPosX, startPosY, width, height )
     ctx.drawImage(monster, monsterWidth * monsterX, monsterY * monsterHeight, monsterWidth, monsterHeight, monsterMove, 310, 200, 200); //50,310,200,200
-    //boy gets caught at 550 so each mistake can add 100
     ctx.drawImage(boy, boyWidth * boyX, 0, boyWidth, boyHeight, 650, 420, 100, 100);
 
     if (gameFrame % staggerFrames === 0) {
@@ -170,9 +160,7 @@ function animate() {
 
 
 
-
-
-//////////////
+//////////////////////////////////////////////////////////////////////
 const musicButton = document.getElementById('music-button');
 
 musicButton.onclick = function(){
@@ -185,31 +173,45 @@ musicButton.onclick = function(){
     }
 };
 
-const startButton = document.getElementById('start-button');
-startButton.onclick = function(){
-    if (startButton.innerText === 'Start'){
-        setTimeout(generateWord, 3000);
-
-        document.getElementById('game-suspense-music').play();
-        document.getElementById('game-suspense-music').volume=0.2;
-        animate();
-        startButton.innerText = 'Restart';
-    }else if (startButton.innerText === 'Restart'){
-        monsterX = 0;
-        monsterMove = 50;
-        gameSpeed = 5;
-        staggerFrames = 2;
-        gameFrame = 0;
-        control = false;
-        setTimeout(generateWord, 3000);
-        // animate(); if I don't do this, it will mantain the speed
-        if(musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
-        document.getElementById('game-suspense-music').play();
-    }
-};
-
 
 //How do I stablish that a game was won (maybe create a variable counting X amount of words)
 //For the game over, I could create a div with display: none; and then whe the game is lost, change it's property?
 ///How should I divide the game?
 
+const playButton = document.getElementById('play-button');
+playButton.onclick = function () {
+    document.getElementById('welcome').style.display = 'none';
+    setTimeout(generateWord, 3000);
+    document.getElementById('game-suspense-music').play();
+    document.getElementById('game-suspense-music').volume = 0.2;
+    animate();
+};
+
+const replayButton = document.getElementById('replay-button');
+replayButton.onclick = function(){
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    monsterX = 0;
+    monsterMove = 50;
+    gameSpeed = 5;
+    staggerFrames = 2;
+    gameFrame = 0;
+    control = false;
+    setTimeout(generateWord, 3000);
+    if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
+    document.getElementById('game-suspense-music').play();
+}
+
+const retryButton = document.getElementById('retry-button');
+retryButton.onclick = function () {
+    document.getElementById('lose').style.display = 'none';
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    monsterX = 0;
+    monsterMove = 50;
+    gameSpeed = 5;
+    staggerFrames = 2;
+    gameFrame = 0;
+    control = false;
+    setTimeout(generateWord, 3000);
+    if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
+    document.getElementById('game-suspense-music').play();
+}
