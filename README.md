@@ -13,34 +13,12 @@ The intent of the game is not to compete but to improve the user's typing abilit
 
 In Zuri's escape, users will be able to:
 
-  - Start and restart the game.
+  - Start and restart the game. The game starts with a screen showing the story of the game and the instructions to play. By clicking the button, the game automatically starts. If the player loses, the option to retry will be given.
+  <p align="center">
+  <a href="/gif/zuri-retry-5WT-v6" title="Zuri retry"><img src="https://i.makeagif.com/media/7-28-2022/5WT-v6.gif" alt="Zuri retry"></a>
+  </p>
+  
 ```.js
-const playButton = document.getElementById('play-button');
-playButton.onclick = function () {
-    document.getElementById('welcome').style.display = 'none';
-    document.getElementById('canvas1').style.display = 'inline-block';
-    setTimeout(generateWord, 3000);
-    document.getElementById('game-suspense-music').volume = 0.01;
-    document.getElementById('game-suspense-music').play();
-    animate();
-};
-
-const replayButton = document.getElementById('replay-button');
-replayButton.onclick = function(){
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    monsterX = 0;
-    monsterMove = 50;
-    gameSpeed = 5;
-    staggerFrames = 2;
-    gameFrame = 0;
-    control = false;
-    setTimeout(generateWord, 3000);
-    document.getElementById('win').style.display = 'none';
-    document.getElementById('canvas1').style.display = 'inline-block';
-    wordCount = 0;
-    document.getElementById('game-suspense-music').play();
-}
-
 const retryButton = document.getElementById('retry-button');
 retryButton.onclick = function () {
     document.getElementById('lose').style.display = 'none';
@@ -60,7 +38,7 @@ retryButton.onclick = function () {
 
 
 
-  - Control the background music.
+  - Control the background music. By clicking on the sound icon, the user will be able to mute and unmute the game's sound. This was accomplished through toggling the classes for the icons and pausing the audio.
 ```.js
 
 let icon = document.getElementById('sound-icon');
@@ -74,7 +52,7 @@ icon.onclick = function(){
     }
 }
 ```
-  - Type the words shown on screen. This is accomplished through the EventListener which will register every key pressed.
+  - Type the words shown on screen. This is accomplished through the EventListener which will register every key pressed. It will be comparing its value to the ones shown on the screen, and will show a little animation and change of color per every correct letter. This function also keeps track of the misses and of the div being shown to make sure no other words are generated until the user has successfully typed the word or lost the game.
   ```.js
   function compareWord(word) {
     control = true;
