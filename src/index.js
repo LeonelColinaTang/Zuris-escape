@@ -2,7 +2,10 @@
 
 const randomWords = require('random-words'); ///require the API that will let me generate words
 let control = false;
+let wordCount = 0;
 //This function generates a word
+
+
 function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
     let container = document.getElementById('word-container');
@@ -38,13 +41,22 @@ function compareWord(word) {
             Array.from(letters).forEach(ele => ele.remove());
             window.removeEventListener('keypress', comparing);
             control = false;
-            setTimeout(generateWord, Math.floor(Math.random()*3)*1000);
+            wordCount +=1;
+            if (wordCount === 5) {
+                Array.from(letters).forEach(ele => ele.remove());
+                document.getElementById('win').style.display = 'block';
+                document.getElementById('canvas1').style.display = 'none';
+                document.getElementById('game-suspense-music').pause();
+            }else{
+                setTimeout(generateWord, Math.floor(Math.random()*3)*1000);
+            }
         }
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             document.getElementById('game-suspense-music').pause();
             Array.from(letters).forEach(ele => ele.remove());
             staggerFrames = 0;
             gameSpeed = 0;
+            wordCount = 0;
             document.getElementById('canvas1').style.display = 'none';
 
             document.getElementById('lose').style.display = 'block';
@@ -187,7 +199,9 @@ replayButton.onclick = function(){
     gameFrame = 0;
     control = false;
     setTimeout(generateWord, 3000);
-    if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
+    document.getElementById('win').style.display = 'none';
+    document.getElementById('canvas1').style.display = 'inline-block';
+    wordCount = 0;
     document.getElementById('game-suspense-music').play();
 }
 
@@ -203,7 +217,6 @@ retryButton.onclick = function () {
     control = false;
     document.getElementById('game-suspense-music').play();
     setTimeout(generateWord, 3000);
-    // if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
     document.getElementById('canvas1').style.display = 'inline-block';
 
 }
