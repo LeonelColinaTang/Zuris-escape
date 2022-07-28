@@ -22,10 +22,10 @@ function compareWord(word) {
     control = true;
     let i = 0;
     let letters = document.getElementsByClassName('letter');
-    window.addEventListener('keypress', comparing); //I start listening for the input
+    window.addEventListener('keypress', comparing); 
 
     function comparing(event) {
-        if (event.key === letters[i].innerText) { //If they are the same, I swap styles
+        if (event.key === letters[i].innerText) { 
             let square = document.querySelector(`#word-container :nth-child(${i + 1})`);
             square.classList.add('great');
             i++;
@@ -45,6 +45,8 @@ function compareWord(word) {
             Array.from(letters).forEach(ele => ele.remove());
             staggerFrames = 0;
             gameSpeed = 0;
+            document.getElementById('canvas1').style.display = 'none';
+
             document.getElementById('lose').style.display = 'block';
         }
     }
@@ -168,9 +170,10 @@ function animate() {
 const playButton = document.getElementById('play-button');
 playButton.onclick = function () {
     document.getElementById('welcome').style.display = 'none';
+    document.getElementById('canvas1').style.display = 'inline-block';
     setTimeout(generateWord, 3000);
+    document.getElementById('game-suspense-music').volume = 0.01;
     document.getElementById('game-suspense-music').play();
-    document.getElementById('game-suspense-music').volume = 0.2;
     animate();
 };
 
@@ -198,9 +201,11 @@ retryButton.onclick = function () {
     staggerFrames = 2;
     gameFrame = 0;
     control = false;
-    setTimeout(generateWord, 3000);
-    if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
     document.getElementById('game-suspense-music').play();
+    setTimeout(generateWord, 3000);
+    // if (musicButton.innerText === 'Resume') musicButton.innerText = 'Mute';
+    document.getElementById('canvas1').style.display = 'inline-block';
+
 }
 
 let icon = document.getElementById('sound-icon');
@@ -213,3 +218,14 @@ icon.onclick = function(){
         document.getElementById('game-suspense-music').play();
     }
 }
+
+document.getElementById('music-icon').style.left = CANVAS_WIDTH + 'px';
+let wordContainer = document.getElementById('word-container');
+
+
+addEventListener('load', () => { 
+    wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth)/2 + 'px';
+    addEventListener('resize', () => {
+        wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
+    });
+});
