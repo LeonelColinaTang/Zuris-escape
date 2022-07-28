@@ -3,7 +3,7 @@
 ## Background
 Zuri's escape is an interactive typing game in which the user will help Zuri escape from Fiend. The user will be able to aid Zuri by typing the words showed on the screen within the allotted time. If the user fails to correctly type the word 10 times, Zuri will be caught thus ending the game.
 <p align="center">
-<a href="/gif/zuris-escape-eGIJ7E" title="Zuri's escape"><img src="https://i.makeagif.com/media/7-28-2022/eGIJ7E.gif" alt="Zuri's escape"></a><div style="font-size:11px;">make <a href="/" title="make a gif">gaming GIFs</a> like this at MakeaGif</div>
+<a href="/gif/zuris-escape-eGIJ7E" title="Zuri's escape"><img src="https://i.makeagif.com/media/7-28-2022/eGIJ7E.gif" alt="Zuri's escape"></a>
 <a href="https://leonel040792.github.io/Zuris-escape/" target="_blank">**Zuri's Escape**</a>
 </p>
 
@@ -15,6 +15,21 @@ In Zuri's escape, users will be able to:
 
   - Start and restart the game.
   - Control the background music.
+```.js
+
+let icon = document.getElementById('sound-icon');
+icon.onclick = function(){
+    icon.classList.toggle('fa-volume-up');
+    icon.classList.toggle('fa-volume-mute');
+    if (icon.classList.value === 'fas fa-volume-mute') {
+        document.getElementById('game-suspense-music').pause();
+    } else {
+        document.getElementById('game-suspense-music').play();
+    }
+}
+```
+
+
   - Type the words shown on screen.
   
   
