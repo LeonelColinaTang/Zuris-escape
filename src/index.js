@@ -191,34 +191,12 @@ playButton.onclick = function () {
 
 const replayButton = document.getElementById('replay-button');
 replayButton.onclick = function(){
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    monsterX = 0;
-    monsterMove = 50;
-    gameSpeed = 5;
-    staggerFrames = 2;
-    gameFrame = 0;
-    control = false;
-    setTimeout(generateWord, 3000);
-    document.getElementById('win').style.display = 'none';
-    document.getElementById('canvas1').style.display = 'inline-block';
-    wordCount = 0;
-    document.getElementById('game-suspense-music').play();
+    buttonAction('win');
 }
 
 const retryButton = document.getElementById('retry-button');
 retryButton.onclick = function () {
-    document.getElementById('lose').style.display = 'none';
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    monsterX = 0;
-    monsterMove = 50;
-    gameSpeed = 5;
-    staggerFrames = 2;
-    gameFrame = 0;
-    control = false;
-    document.getElementById('game-suspense-music').play();
-    setTimeout(generateWord, 3000);
-    document.getElementById('canvas1').style.display = 'inline-block';
-
+    buttonAction('lose');
 }
 
 let icon = document.getElementById('sound-icon');
@@ -232,13 +210,28 @@ icon.onclick = function(){
     }
 }
 
-document.getElementById('music-icon').style.left = CANVAS_WIDTH + 'px';
-let wordContainer = document.getElementById('word-container');
 
 
 addEventListener('load', () => { 
+    // document.getElementById('music-icon').style.left = CANVAS_WIDTH + 'px';
+    let wordContainer = document.getElementById('word-container');
     wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth)/2 + 'px';
     addEventListener('resize', () => {
         wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
     });
 });
+
+function buttonAction(popupdiv) {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    monsterX = 0;
+    monsterMove = 50;
+    gameSpeed = 5;
+    staggerFrames = 2;
+    gameFrame = 0;
+    control = false;
+    wordCount = 0;
+    document.getElementById('game-suspense-music').play();
+    setTimeout(generateWord, 3000);
+    document.getElementById(`${popupdiv}`).style.display = 'none';
+    document.getElementById('canvas1').style.display = 'inline-block';
+}
