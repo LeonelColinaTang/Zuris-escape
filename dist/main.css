@@ -75,7 +75,7 @@ body {
 #music-icon {
   position: absolute;
   color: white;
-  margin-top: 20px;
+  top: 100px;
 }
 
 #music-icon i:hover {

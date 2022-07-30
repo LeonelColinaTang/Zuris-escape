@@ -175,7 +175,6 @@ function animate() {
 
 
 //////////////////////////////////////////////////////////////////////
-
 //How do I stablish that a game was won (maybe create a variable counting X amount of words)
 ///How should I divide the game?
 
@@ -184,7 +183,7 @@ playButton.onclick = function () {
     document.getElementById('welcome').style.display = 'none';
     document.getElementById('canvas1').style.display = 'inline-block';
     setTimeout(generateWord, 3000);
-    document.getElementById('game-suspense-music').volume = 0.01;
+    document.getElementById('game-suspense-music').volume = 0.1;
     document.getElementById('game-suspense-music').play();
     animate();
 };
@@ -213,11 +212,16 @@ icon.onclick = function(){
 
 
 addEventListener('load', () => { 
-    // document.getElementById('music-icon').style.left = CANVAS_WIDTH + 'px';
+    let element = document.getElementById('welcome');
+    let right_margin = parseInt(getComputedStyle(element).marginRight);
+    document.getElementById('music-icon').style.right = right_margin - 50 + 'px';
     let wordContainer = document.getElementById('word-container');
     wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth)/2 + 'px';
     addEventListener('resize', () => {
         wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
+        let right_margin = parseInt(getComputedStyle(element).marginRight);
+        document.getElementById('music-icon').style.right = right_margin - 50 + 'px';
+
     });
 });
 
