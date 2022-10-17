@@ -2,7 +2,6 @@
 const randomWords = require('random-words'); ///require the API that will let me generate words
 
 addEventListener('load', () => {
-    // let control = false;
     let wordCount = 0;
 
     const canvas = document.getElementById('canvas1');
@@ -31,19 +30,16 @@ function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
     let container = document.getElementById('word-container');
 
-    // if (!control){
         word.split("").forEach(letter => {
             let square = document.createElement("div");
             square.innerText = letter;
             square.classList.add('letter');
             container.appendChild(square);
         });
-    // }
     compareWord(word);
 }
 
 function compareWord(word) {
-    // control = true;
     let i = 0;
     let letters = document.getElementsByClassName('letter');
     window.addEventListener('keypress', comparing); 
@@ -59,7 +55,6 @@ function compareWord(word) {
         if (word.length === i) { //If word completed, I remove it with the event listener until next word
             i = 0;
             wordCount +=1;
-            // control = false;
 
             letters.remove();
             window.removeEventListener('keypress', comparing);
