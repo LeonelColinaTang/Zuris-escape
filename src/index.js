@@ -1,8 +1,10 @@
 // import Example from './scripts/example';
 const randomWords = require('random-words'); ///require the API that will let me generate words
+
 let control = false;
 let wordCount = 0;
 
+const canvas = document.getElementById('canvas1');
 
 //This function generates a word
 function generateWord() {
@@ -46,27 +48,27 @@ function compareWord(word) {
         }
 
         if (wordCount === 5) {
-            Array.from(letters).forEach(ele => ele.remove());
+            letters.remove();
             document.getElementById('win').style.display = 'block';
-            document.getElementById('canvas1').style.display = 'none';
+            canvas.style.display = 'none';
             document.getElementById('game-suspense-music').pause();
         }
 
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             document.getElementById('game-suspense-music').pause();
-            Array.from(letters).forEach(ele => ele.remove());
+            letters.remove();
             staggerFrames = 0;
             gameSpeed = 0;
             wordCount = 0;
-            document.getElementById('canvas1').style.display = 'none';
 
+            canvas.style.display = 'none';
             document.getElementById('lose').style.display = 'block';
         }
     }
 }
 
 ////////////////////////////////////////////////////////////////
-const canvas = document.getElementById('canvas1'); //Here we create the canvas witht the width and height
+//Here we create the canvas witht the width and height
 const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 800;
 const CANVAS_HEIGHT = canvas.height = 600;
