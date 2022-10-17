@@ -1,10 +1,29 @@
 // import Example from './scripts/example';
 const randomWords = require('random-words'); ///require the API that will let me generate words
 
-let control = false;
-let wordCount = 0;
+addEventListener('load', () => {
+    // let control = false;
+    let wordCount = 0;
 
-const canvas = document.getElementById('canvas1');
+    const canvas = document.getElementById('canvas1');
+    const music = document.getElementById('game-suspense-music');
+
+    let element = document.getElementById('welcome');
+    let right_margin = parseInt(getComputedStyle(element).marginRight);
+    let wordContainer = document.getElementById('word-container');
+    let musicIcon = document.getElementById('music-icon');
+
+    musicIcon.style.right = right_margin - 50 + 'px';
+    wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
+
+    addEventListener('resize', () => {
+
+        wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
+        right_margin = parseInt(getComputedStyle(element).marginRight);
+        musicIcon.style.right = right_margin - 50 + 'px';
+
+    });
+});
 
 //This function generates a word
 function generateWord() {
@@ -12,19 +31,19 @@ function generateWord() {
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
     let container = document.getElementById('word-container');
 
-    if (!control){
+    // if (!control){
         word.split("").forEach(letter => {
             let square = document.createElement("div");
             square.innerText = letter;
             square.classList.add('letter');
             container.appendChild(square);
         });
-    }
+    // }
     compareWord(word);
 }
 
 function compareWord(word) {
-    control = true;
+    // control = true;
     let i = 0;
     let letters = document.getElementsByClassName('letter');
     window.addEventListener('keypress', comparing); 
@@ -40,7 +59,7 @@ function compareWord(word) {
         if (word.length === i) { //If word completed, I remove it with the event listener until next word
             i = 0;
             wordCount +=1;
-            control = false;
+            // control = false;
 
             letters.remove();
             window.removeEventListener('keypress', comparing);
@@ -51,11 +70,11 @@ function compareWord(word) {
             letters.remove();
             document.getElementById('win').style.display = 'block';
             canvas.style.display = 'none';
-            document.getElementById('game-suspense-music').pause();
+            music.pause();
         }
 
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
-            document.getElementById('game-suspense-music').pause();
+            music.pause();
             letters.remove();
             staggerFrames = 0;
             gameSpeed = 0;
@@ -182,12 +201,13 @@ function animate() {
 ///How should I divide the game?
 
 const playButton = document.getElementById('play-button');
+
 playButton.onclick = function () {
     document.getElementById('welcome').style.display = 'none';
-    document.getElementById('canvas1').style.display = 'inline-block';
+    canvas.style.display = 'inline-block';
     setTimeout(generateWord, 3000);
-    document.getElementById('game-suspense-music').volume = 0.1;
-    document.getElementById('game-suspense-music').play();
+    music.volume = 0.1;
+    music.play();
     animate();
 };
 
@@ -206,30 +226,13 @@ icon.onclick = function(){
     icon.classList.toggle('fa-volume-up');
     icon.classList.toggle('fa-volume-mute');
     if (icon.classList.value === 'fas fa-volume-mute') {
-        document.getElementById('game-suspense-music').pause();
+        music.pause();
     } else {
-        document.getElementById('game-suspense-music').play();
+        music.play();
     }
 }
 
-addEventListener('load', () => { 
 
-    let element = document.getElementById('welcome');
-    let right_margin = parseInt(getComputedStyle(element).marginRight);
-    let wordContainer = document.getElementById('word-container');
-    let musicIcon = document.getElementById('music-icon');
-
-    musicIcon.style.right = right_margin - 50 + 'px';
-    wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth)/2 + 'px';
-
-    addEventListener('resize', () => {
-
-        wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
-        right_margin = parseInt(getComputedStyle(element).marginRight);
-        musicIcon.style.right = right_margin - 50 + 'px';
-
-    });
-});
 
 function buttonAction(popupdiv) {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -243,7 +246,7 @@ function buttonAction(popupdiv) {
 
     setTimeout(generateWord, 3000);
 
-    document.getElementById('game-suspense-music').play();
+    music.play();
     document.getElementById(`${popupdiv}`).style.display = 'none';
-    document.getElementById('canvas1').style.display = 'inline-block';
+    canvas.style.display = 'inline-block';
 }
