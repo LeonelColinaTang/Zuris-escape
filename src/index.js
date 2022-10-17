@@ -1,12 +1,12 @@
 // import Example from './scripts/example';
-
 const randomWords = require('random-words'); ///require the API that will let me generate words
 let control = false;
 let wordCount = 0;
+
+
 //This function generates a word
-
-
 function generateWord() {
+
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
     let container = document.getElementById('word-container');
 
@@ -209,18 +209,21 @@ icon.onclick = function(){
     }
 }
 
-
-
 addEventListener('load', () => { 
+
     let element = document.getElementById('welcome');
     let right_margin = parseInt(getComputedStyle(element).marginRight);
-    document.getElementById('music-icon').style.right = right_margin - 50 + 'px';
     let wordContainer = document.getElementById('word-container');
+    let musicIcon = document.getElementById('music-icon');
+
+    musicIcon.style.right = right_margin - 50 + 'px';
     wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth)/2 + 'px';
+
     addEventListener('resize', () => {
+
         wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
-        let right_margin = parseInt(getComputedStyle(element).marginRight);
-        document.getElementById('music-icon').style.right = right_margin - 50 + 'px';
+        right_margin = parseInt(getComputedStyle(element).marginRight);
+        musicIcon.style.right = right_margin - 50 + 'px';
 
     });
 });
@@ -234,8 +237,10 @@ function buttonAction(popupdiv) {
     gameFrame = 0;
     control = false;
     wordCount = 0;
-    document.getElementById('game-suspense-music').play();
+
     setTimeout(generateWord, 3000);
+
+    document.getElementById('game-suspense-music').play();
     document.getElementById(`${popupdiv}`).style.display = 'none';
     document.getElementById('canvas1').style.display = 'inline-block';
 }
