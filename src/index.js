@@ -37,19 +37,21 @@ function compareWord(word) {
 
         if (word.length === i) { //If word completed, I remove it with the event listener until next word
             i = 0;
-            Array.from(letters).forEach(ele => ele.remove());
-            window.removeEventListener('keypress', comparing);
-            control = false;
             wordCount +=1;
-            if (wordCount === 5) {
-                Array.from(letters).forEach(ele => ele.remove());
-                document.getElementById('win').style.display = 'block';
-                document.getElementById('canvas1').style.display = 'none';
-                document.getElementById('game-suspense-music').pause();
-            }else{
-                setTimeout(generateWord, Math.floor(Math.random()*3)*1000);
-            }
+            control = false;
+
+            letters.remove();
+            window.removeEventListener('keypress', comparing);
+            setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
         }
+
+        if (wordCount === 5) {
+            Array.from(letters).forEach(ele => ele.remove());
+            document.getElementById('win').style.display = 'block';
+            document.getElementById('canvas1').style.display = 'none';
+            document.getElementById('game-suspense-music').pause();
+        }
+
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             document.getElementById('game-suspense-music').pause();
             Array.from(letters).forEach(ele => ele.remove());
