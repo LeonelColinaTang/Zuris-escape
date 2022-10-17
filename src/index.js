@@ -29,8 +29,7 @@ function compareWord(word) {
 
     function comparing(event) {
         if (event.key === letters[i].innerText) { 
-            let square = document.querySelector(`#word-container :nth-child(${i + 1})`);
-            square.classList.add('great');
+            document.querySelector(`#word-container :nth-child(${i + 1})`).classList.add('great');
             i++;
         } else {
             monsterMove += 100;
