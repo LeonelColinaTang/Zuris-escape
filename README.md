@@ -4,7 +4,7 @@
 Zuri's escape is an interactive typing game in which the user will help Zuri escape from Fiend. The user will be able to aid Zuri by typing the words showed on the screen correctly. If the user fails to correctly type the word 5 times, Zuri will be caught thus ending the game.
 <p align="center">
 <a href="/gif/zuris-escape-eGIJ7E" title="Zuri's escape"><img src="https://i.makeagif.com/media/7-28-2022/eGIJ7E.gif" alt="Zuri's escape"></a><br>
-<a href="https://leonel040792.github.io/Zuris-escape/" target="_blank">**Zuri's Escape**</a>
+<a href="https://leonelcolinatang.github.io/Zuris-escape/" target="_blank">**Zuri's Escape**</a>
 </p>
 
 The intent of the game is not to compete but to improve the user's typing ability in an entertaining and visually pleasing manner.
