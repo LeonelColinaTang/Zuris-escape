@@ -1,16 +1,28 @@
 // import Example from './scripts/example';
 const randomWords = require('random-words'); ///require the API that will let me generate words
 
-addEventListener('load', () => {
+const canvas = document.getElementById('canvas1');
+const playButton = document.getElementById('play-button');
+const replayButton = document.getElementById('replay-button');
+const retryButton = document.getElementById('retry-button');
+let icon = document.getElementById('sound-icon');
+
+
+const music = document.getElementById('game-suspense-music');
+let wordContainer = document.getElementById('word-container');
+
+addEventListener('DOMContentLoaded', () => {
     let wordCount = 0;
 
-    const canvas = document.getElementById('canvas1');
-    const music = document.getElementById('game-suspense-music');
 
     let element = document.getElementById('welcome');
     let right_margin = parseInt(getComputedStyle(element).marginRight);
-    let wordContainer = document.getElementById('word-container');
     let musicIcon = document.getElementById('music-icon');
+
+
+
+
+
 
     musicIcon.style.right = right_margin - 50 + 'px';
     wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
@@ -28,13 +40,13 @@ addEventListener('load', () => {
 function generateWord() {
 
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
-    let container = document.getElementById('word-container');
+    // let container = document.getElementById('word-container');
 
         word.split("").forEach(letter => {
             let square = document.createElement("div");
             square.innerText = letter;
             square.classList.add('letter');
-            container.appendChild(square);
+            wordContainer.appendChild(square);
         });
     compareWord(word);
 }
@@ -42,9 +54,10 @@ function generateWord() {
 function compareWord(word) {
     let i = 0;
     let letters = document.getElementsByClassName('letter');
+    
     window.addEventListener('keypress', comparing); 
-
     function comparing(event) {
+        debugger
         if (event.key === letters[i].innerText) { 
             document.querySelector(`#word-container :nth-child(${i + 1})`).classList.add('great');
             i++;
@@ -56,13 +69,17 @@ function compareWord(word) {
             i = 0;
             wordCount +=1;
 
-            letters.remove();
+            for (var letter of letters) {
+                letter.remove();
+            }
             window.removeEventListener('keypress', comparing);
-            setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+            return setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
         }
 
         if (wordCount === 5) {
-            letters.remove();
+            for (var letter of letters) {
+                letter.remove();
+            }
             document.getElementById('win').style.display = 'block';
             canvas.style.display = 'none';
             music.pause();
@@ -70,13 +87,15 @@ function compareWord(word) {
 
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             music.pause();
-            letters.remove();
+            for (var letter of letters) {
+                letter.remove();
+            }
             staggerFrames = 0;
             gameSpeed = 0;
             wordCount = 0;
 
             canvas.style.display = 'none';
-            document.getElementById('lose').style.display = 'block';
+            return document.getElementById('lose').style.display = 'block';
         }
     }
 }
@@ -195,7 +214,7 @@ function animate() {
 //How do I stablish that a game was won (maybe create a variable counting X amount of words)
 ///How should I divide the game?
 
-const playButton = document.getElementById('play-button');
+// const playButton = document.getElementById('play-button');
 
 playButton.onclick = function () {
     document.getElementById('welcome').style.display = 'none';
@@ -206,17 +225,17 @@ playButton.onclick = function () {
     animate();
 };
 
-const replayButton = document.getElementById('replay-button');
+// const replayButton = document.getElementById('replay-button');
 replayButton.onclick = function(){
     buttonAction('win');
 }
 
-const retryButton = document.getElementById('retry-button');
+// const retryButton = document.getElementById('retry-button');
 retryButton.onclick = function () {
     buttonAction('lose');
 }
 
-let icon = document.getElementById('sound-icon');
+// let icon = document.getElementById('sound-icon');
 icon.onclick = function(){
     icon.classList.toggle('fa-volume-up');
     icon.classList.toggle('fa-volume-mute');

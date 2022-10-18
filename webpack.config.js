@@ -18,7 +18,7 @@ const config ={
                 exclude: /node_modules/,
             },
             {
-                test: /\.s?[ac]ss$/,
+                test: /\.scss/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
@@ -39,6 +39,5 @@ module.exports = (env, argv) => {
     } else {
         config.devtool = 'eval-source-map';
     }
-
     return config;
 }
