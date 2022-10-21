@@ -62,9 +62,6 @@ body {
 #win {
   padding-top: 50px;
   height: 400px;
-}
-
-#win {
   display: none;
 }
 
@@ -75,7 +72,8 @@ body {
 #music-icon {
   position: absolute;
   color: white;
-  top: 100px;
+  top: 20px;
+  right: 20px;
 }
 
 #music-icon i:hover {
@@ -88,15 +86,21 @@ body {
   text-align: center;
 }
 
+#canvas-container {
+  position: relative;
+  width: 800px;
+  margin: auto;
+}
+
 #word-container {
   display: flex;
   justify-content: center;
-  margin: auto;
   height: 60px;
   width: 300px;
   margin-top: 80px;
-  text-align: center;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .letter {

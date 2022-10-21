@@ -10,30 +10,8 @@ const soundIcon = document.getElementById('sound-icon');
 const musicIcon = document.getElementById('music-icon'); 
 
 const music = document.getElementById('game-suspense-music');
-let wordContainer = document.getElementById('word-container');
-
-addEventListener('DOMContentLoaded', () => {
-
-
-    let welcomeDiv = document.getElementById('welcome');
-    let right_margin = parseInt(getComputedStyle(welcomeDiv).marginRight);
-
-
-
-
-
-    musicIcon.style.right = right_margin - 50 + 'px';
-    wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
-
-    addEventListener('resize', () => {
-
-        wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
-        right_margin = parseInt(getComputedStyle(welcomeDiv).marginRight);
-        musicIcon.style.right = right_margin - 50 + 'px';
-
-
-    });
-});
+const wordContainer = document.getElementById('word-container');
+const welcomeDiv = document.getElementById('welcome');
 
 //This function generates a word
 function generateWord() {
