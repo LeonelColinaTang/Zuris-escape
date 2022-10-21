@@ -7,23 +7,23 @@ const config ={
         path.resolve(__dirname, 'src','index.scss')
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist'),  // bundled file in dist/
         filename: '[name].js'
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                use:['babel-loader'],
-                exclude: /node_modules/,
+                test: /\.js$/, // applies to js files
+                use: ['babel-loader'], // transpiles your js
+                exclude: /node_modules/, // don't transpile node modules
             },
             {
-                test: /\.scss/,
+                test: /\.s?[ac]ss$/, // applies to css/scss/sass files
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    MiniCssExtractPlugin.loader, // create bundled css file
                     {
                         loader: 'css-loader',
-                        options: {url:false}
+                        options: { url: false } // don't resolve url() statements
                     },
                     'sass-loader',
                 ]

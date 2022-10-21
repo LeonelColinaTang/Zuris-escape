@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leonel040792/Zuris-escape.git"
+    "url": "git+https://github.com/LeonelColinaTang/Zuris-escape.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/leonel040792/Zuris-escape/issues"
+    "url": "https://github.com/LeonelColinaTang/Zuris-escape/issues"
   },
-  "homepage": "https://github.com/leonel040792/Zuris-escape#readme",
+  "homepage": "https://github.com/LeonelColinaTang/Zuris-escape#readme",
   "dependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",

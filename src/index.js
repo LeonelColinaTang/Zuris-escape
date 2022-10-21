@@ -1,24 +1,22 @@
-// import Example from './scripts/example';
 const randomWords = require('random-words'); ///require the API that will let me generate words
 
 const canvas = document.getElementById('canvas1');
 const playButton = document.getElementById('play-button');
 const replayButton = document.getElementById('replay-button');
 const retryButton = document.getElementById('retry-button');
-let icon = document.getElementById('sound-icon');
-
+//This selects to icon to then switch it. It won't take margins
+const soundIcon = document.getElementById('sound-icon');
+//This selects the anchor which will take margins to position
+const musicIcon = document.getElementById('music-icon'); 
 
 const music = document.getElementById('game-suspense-music');
 let wordContainer = document.getElementById('word-container');
 
 addEventListener('DOMContentLoaded', () => {
-    let wordCount = 0;
 
 
-    let element = document.getElementById('welcome');
-    let right_margin = parseInt(getComputedStyle(element).marginRight);
-    let musicIcon = document.getElementById('music-icon');
-
+    let welcomeDiv = document.getElementById('welcome');
+    let right_margin = parseInt(getComputedStyle(welcomeDiv).marginRight);
 
 
 
@@ -30,8 +28,9 @@ addEventListener('DOMContentLoaded', () => {
     addEventListener('resize', () => {
 
         wordContainer.style.left = (window.innerWidth - wordContainer.offsetWidth) / 2 + 'px';
-        right_margin = parseInt(getComputedStyle(element).marginRight);
+        right_margin = parseInt(getComputedStyle(welcomeDiv).marginRight);
         musicIcon.style.right = right_margin - 50 + 'px';
+
 
     });
 });
@@ -51,13 +50,16 @@ function generateWord() {
     compareWord(word);
 }
 
+let wordCount = 0;
 function compareWord(word) {
     let i = 0;
-    let letters = document.getElementsByClassName('letter');
+    let letters = Array.from(document.getElementsByClassName('letter'));
+
     
     window.addEventListener('keypress', comparing); 
     function comparing(event) {
-        debugger
+
+
         if (event.key === letters[i].innerText) { 
             document.querySelector(`#word-container :nth-child(${i + 1})`).classList.add('great');
             i++;
@@ -68,18 +70,15 @@ function compareWord(word) {
         if (word.length === i) { //If word completed, I remove it with the event listener until next word
             i = 0;
             wordCount +=1;
+ 
+            letters.forEach(e => e.remove())
 
-            for (var letter of letters) {
-                letter.remove();
-            }
             window.removeEventListener('keypress', comparing);
-            return setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+            setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
         }
 
-        if (wordCount === 5) {
-            for (var letter of letters) {
-                letter.remove();
-            }
+        if (wordCount === 3) {
+            letters.forEach(e => e.remove())
             document.getElementById('win').style.display = 'block';
             canvas.style.display = 'none';
             music.pause();
@@ -87,9 +86,7 @@ function compareWord(word) {
 
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             music.pause();
-            for (var letter of letters) {
-                letter.remove();
-            }
+            letters.forEach(e => e.remove())
             staggerFrames = 0;
             gameSpeed = 0;
             wordCount = 0;
@@ -214,8 +211,6 @@ function animate() {
 //How do I stablish that a game was won (maybe create a variable counting X amount of words)
 ///How should I divide the game?
 
-// const playButton = document.getElementById('play-button');
-
 playButton.onclick = function () {
     document.getElementById('welcome').style.display = 'none';
     canvas.style.display = 'inline-block';
@@ -225,21 +220,18 @@ playButton.onclick = function () {
     animate();
 };
 
-// const replayButton = document.getElementById('replay-button');
 replayButton.onclick = function(){
     buttonAction('win');
 }
 
-// const retryButton = document.getElementById('retry-button');
 retryButton.onclick = function () {
     buttonAction('lose');
 }
 
-// let icon = document.getElementById('sound-icon');
-icon.onclick = function(){
-    icon.classList.toggle('fa-volume-up');
-    icon.classList.toggle('fa-volume-mute');
-    if (icon.classList.value === 'fas fa-volume-mute') {
+soundIcon.onclick = function(){
+    soundIcon.classList.toggle('fa-volume-up');
+    soundIcon.classList.toggle('fa-volume-mute');
+    if (soundIcon.classList.value === 'fas fa-volume-mute') {
         music.pause();
     } else {
         music.play();
@@ -248,7 +240,7 @@ icon.onclick = function(){
 
 
 
-function buttonAction(popupdiv) {
+function buttonAction(popupDiv) {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     monsterX = 0;
     monsterMove = 50;
@@ -261,6 +253,6 @@ function buttonAction(popupdiv) {
     setTimeout(generateWord, 3000);
 
     music.play();
-    document.getElementById(`${popupdiv}`).style.display = 'none';
+    document.getElementById(`${popupDiv}`).style.display = 'none';
     canvas.style.display = 'inline-block';
 }
