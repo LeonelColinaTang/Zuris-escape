@@ -11,7 +11,6 @@ const musicIcon = document.getElementById('music-icon');
 
 const music = document.getElementById('game-suspense-music');
 const wordContainer = document.getElementById('word-container');
-const welcomeDiv = document.getElementById('welcome');
 
 //This function generates a word
 function generateWord() {
