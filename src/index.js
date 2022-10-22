@@ -17,7 +17,6 @@ const welcomeDiv = document.getElementById('welcome');
 function generateWord() {
 
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
-    // let container = document.getElementById('word-container');
 
         word.split("").forEach(letter => {
             let square = document.createElement("div");

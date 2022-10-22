@@ -21,14 +21,10 @@ body {
 }
 
 .popup {
-  width: 800px;
-  height: 600px;
-  position: relative;
-  margin: auto;
-  z-index: 2;
   background-color: rgb(0, 0, 0);
   border: 5px solid rgba(255, 255, 255, 0.7);
   border-radius: 20px;
+  padding: 25px;
 }
 
 .normal-text {
@@ -61,13 +57,7 @@ body {
   box-shadow: 0 0 10px #d3d3d3, 0 0 40px #9e9e9e, 0 0 80px #7d7d7d;
 }
 
-#win {
-  padding-top: 50px;
-  height: 400px;
-  display: none;
-}
-
-#lose {
+#win, #lose {
   display: none;
 }
 
