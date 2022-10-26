@@ -11,54 +11,55 @@ const musicIcon = document.getElementById('music-icon');
 
 const music = document.getElementById('game-suspense-music');
 const wordContainer = document.getElementById('word-container');
+let wordCount = 0;
+
 
 //This function generates a word
 function generateWord() {
 
     let word = randomWords({ exactly: 1, maxLength: 4 })[0];
 
-        word.split("").forEach(letter => {
-            let square = document.createElement("div");
-            square.innerText = letter;
-            square.classList.add('letter');
-            wordContainer.appendChild(square);
-        });
-    compareWord(word);
+    word.split("").forEach(letter => {
+        let square = document.createElement("div");
+        square.innerHTML = letter;
+        square.classList.add('letter');
+        wordContainer.appendChild(square);
+    });
+
+
+    // compareWord(word);
 }
 
-let wordCount = 0;
-function compareWord(word) {
-    let i = 0;
-    let letters = Array.from(document.getElementsByClassName('letter'));
-
+function startGame(){
+    setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
     
-    window.addEventListener('keypress', comparing); 
-    function comparing(event) {
-
-
-        if (event.key === letters[i].innerText) { 
+    let i = 0;
+    window.addEventListener('keypress', (event)=>{
+        let letters = Array.from(document.getElementsByClassName('letter'));
+        if (event.key === letters[i].innerHTML) {
             document.querySelector(`#word-container :nth-child(${i + 1})`).classList.add('great');
             i++;
         } else {
             monsterMove += 100;
         }
 
-        if (word.length === i) { //If word completed, I remove it with the event listener until next word
+        if (letters.length === i) { //If word completed, I remove it with the event listener until next word
             i = 0;
-            wordCount +=1;
- 
+            wordCount += 1;
             letters.forEach(e => e.remove())
 
-            window.removeEventListener('keypress', comparing);
-            setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+            if (wordCount === 3) {
+                letters.forEach(e => e.remove())
+                document.getElementById('win').style.display = 'block';
+                canvas.style.display = 'none';
+                music.pause();
+                window.removeEventListener('keypress', this)
+                return
+            } else {
+                setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+            }
         }
 
-        if (wordCount === 3) {
-            letters.forEach(e => e.remove())
-            document.getElementById('win').style.display = 'block';
-            canvas.style.display = 'none';
-            music.pause();
-        }
 
         if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
             music.pause();
@@ -66,12 +67,67 @@ function compareWord(word) {
             staggerFrames = 0;
             gameSpeed = 0;
             wordCount = 0;
+            i = 0;
 
             canvas.style.display = 'none';
-            return document.getElementById('lose').style.display = 'block';
+            document.getElementById('lose').style.display = 'block';
+            window.removeEventListener('keypress', this)
+            return
         }
+
+
+    }); 
+
+}
+
+playButton.onclick = function () {
+    document.getElementById('welcome').style.display = 'none';
+    canvas.style.display = 'inline-block';
+    startGame();
+    music.volume = 0.1;
+    music.play();
+    animate();
+};
+
+replayButton.onclick = function () {
+    buttonAction('win');
+}
+
+retryButton.onclick = function () {
+    buttonAction('lose');
+}
+
+soundIcon.onclick = function () {
+    soundIcon.classList.toggle('fa-volume-up');
+    soundIcon.classList.toggle('fa-volume-mute');
+    if (soundIcon.classList.value === 'fas fa-volume-mute') {
+        music.pause();
+    } else {
+        music.play();
     }
 }
+
+
+
+function buttonAction(popupDiv) {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    monsterX = 0;
+    monsterMove = 50;
+    gameSpeed = 5;
+    staggerFrames = 2;
+    gameFrame = 0;
+    control = false;
+    wordCount = 0;
+    document.getElementById(`${popupDiv}`).style.display = 'none';
+    canvas.style.display = 'inline-block';
+
+    setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+    // startGame();
+    music.play();
+
+}
+
+
 
 ////////////////////////////////////////////////////////////////
 //Here we create the canvas witht the width and height
@@ -148,6 +204,7 @@ let boyX = 5;
 let monsterX = 0;
 let monsterY = 3;
 let monsterMove = 50;
+
 //two variables to control the
 let gameFrame = 0;
 let staggerFrames = 2;
@@ -155,6 +212,7 @@ let staggerFrames = 2;
 // I'm animating the backgrounds here
 function animate() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
     gameBackgrounds.forEach(function (ele) {
         ele.update();
         ele.draw();
@@ -180,55 +238,3 @@ function animate() {
     gameFrame++;
     requestAnimationFrame(animate);
 };
-
-
-
-//////////////////////////////////////////////////////////////////////
-//How do I stablish that a game was won (maybe create a variable counting X amount of words)
-///How should I divide the game?
-
-playButton.onclick = function () {
-    document.getElementById('welcome').style.display = 'none';
-    canvas.style.display = 'inline-block';
-    setTimeout(generateWord, 3000);
-    music.volume = 0.1;
-    music.play();
-    animate();
-};
-
-replayButton.onclick = function(){
-    buttonAction('win');
-}
-
-retryButton.onclick = function () {
-    buttonAction('lose');
-}
-
-soundIcon.onclick = function(){
-    soundIcon.classList.toggle('fa-volume-up');
-    soundIcon.classList.toggle('fa-volume-mute');
-    if (soundIcon.classList.value === 'fas fa-volume-mute') {
-        music.pause();
-    } else {
-        music.play();
-    }
-}
-
-
-
-function buttonAction(popupDiv) {
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    monsterX = 0;
-    monsterMove = 50;
-    gameSpeed = 5;
-    staggerFrames = 2;
-    gameFrame = 0;
-    control = false;
-    wordCount = 0;
-
-    setTimeout(generateWord, 3000);
-
-    music.play();
-    document.getElementById(`${popupDiv}`).style.display = 'none';
-    canvas.style.display = 'inline-block';
-}
