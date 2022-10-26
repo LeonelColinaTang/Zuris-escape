@@ -25,58 +25,83 @@ function generateWord() {
         square.classList.add('letter');
         wordContainer.appendChild(square);
     });
+}
+let controller = false;
 
+// const prom = new Promise((resolve) =>{
+//     for(let m=0; m < 200; m++){
+//         setTimeout(()=>monsterMove += 0.5, m*2);
+//     }
+// })
 
-    // compareWord(word);
+function moveMonster(){
+    let promises = [];
+
+    for (let m = 0; m < 200; m++) {
+        promises.push(new Promise((resolve) => {
+            setTimeout(() => {
+                // monsterMove += 0.5; both ways work
+                resolve(monsterMove += 0.5);
+            }, m * 2);
+        }))
+    }
+    return Promise.all(promises);
 }
 
 function startGame(){
     setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
-    
     let i = 0;
-    window.addEventListener('keypress', (event)=>{
-        let letters = Array.from(document.getElementsByClassName('letter'));
-        if (event.key === letters[i].innerHTML) {
-            document.querySelector(`#word-container :nth-child(${i + 1})`).classList.add('great');
-            i++;
-        } else {
-            monsterMove += 100;
-        }
+    controller = true;
+    
+    window.addEventListener('keypress', async (event)=>{
+        if (controller) {
 
-        if (letters.length === i) { //If word completed, I remove it with the event listener until next word
-            i = 0;
-            wordCount += 1;
-            letters.forEach(e => e.remove())
-
-            if (wordCount === 3) {
-                letters.forEach(e => e.remove())
-                document.getElementById('win').style.display = 'block';
-                canvas.style.display = 'none';
-                music.pause();
-                window.removeEventListener('keypress', this)
-                return
+            let letters = Array.from(document.getElementsByClassName('letter'));
+            if (event.key === letters[i].innerHTML) {
+                document.querySelector(`#word-container :nth-child(${i + 1})`).classList.add('great');
+                i++;
             } else {
-                setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+                // for(let m=0; m < 200; m++){
+                //     setTimeout(()=>monsterMove += 0.5, m*2);
+                // }
+                await moveMonster();
+            }
+    
+            if (letters.length === i) { //If word completed, I remove it with the event listener until next word
+                i = 0;
+                wordCount += 1;
+                letters.forEach(e => e.remove())
+    
+                if (wordCount === 3) {
+                    letters.forEach(e => e.remove())
+                    document.getElementById('win').style.display = 'block';
+                    canvas.style.display = 'none';
+                    music.pause();
+                    controller = false;
+                    return
+                } else {
+                    setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
+                }
+            }
+    
+    
+            if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
+                music.pause();
+                letters.forEach(e => e.remove())
+                staggerFrames = 0;
+                gameSpeed = 0;
+                wordCount = 0;
+                i = 0;
+                controller = false
+                canvas.style.display = 'none';
+                document.getElementById('lose').style.display = 'block';
+                return
             }
         }
 
-
-        if (monsterMove >= 550) { //If there are 5 mistakes, the game is lost. This needs fixing.
-            music.pause();
-            letters.forEach(e => e.remove())
-            staggerFrames = 0;
-            gameSpeed = 0;
-            wordCount = 0;
-            i = 0;
-
-            canvas.style.display = 'none';
-            document.getElementById('lose').style.display = 'block';
-            window.removeEventListener('keypress', this)
-            return
-        }
-
-
     }); 
+
+
 
 }
 
@@ -91,10 +116,12 @@ playButton.onclick = function () {
 
 replayButton.onclick = function () {
     buttonAction('win');
+    controller = true;
 }
 
 retryButton.onclick = function () {
     buttonAction('lose');
+    controller = true;
 }
 
 soundIcon.onclick = function () {
@@ -116,14 +143,11 @@ function buttonAction(popupDiv) {
     gameSpeed = 5;
     staggerFrames = 2;
     gameFrame = 0;
-    control = false;
     wordCount = 0;
     document.getElementById(`${popupDiv}`).style.display = 'none';
     canvas.style.display = 'inline-block';
 
     setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
-    // startGame();
-    music.play();
 
 }
 
