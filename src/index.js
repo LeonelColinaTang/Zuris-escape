@@ -146,7 +146,7 @@ function buttonAction(popupDiv) {
     wordCount = 0;
     document.getElementById(`${popupDiv}`).style.display = 'none';
     canvas.style.display = 'inline-block';
-
+    music.play();
     setTimeout(generateWord, Math.floor(Math.random() * 3) * 1000);
 
 }
