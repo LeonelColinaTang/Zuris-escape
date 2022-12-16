@@ -72,7 +72,7 @@ function startGame(){
                 wordCount += 1;
                 letters.forEach(e => e.remove())
     
-                if (wordCount === 3) {
+                if (wordCount === 5) {
                     letters.forEach(e => e.remove())
                     document.getElementById('win').style.display = 'block';
                     canvas.style.display = 'none';
