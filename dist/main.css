@@ -3,6 +3,7 @@
   \*************************************************************************************************************************************/
 body {
   background-color: #000;
+  margin: 0;
 }
 
 #flex-container {
@@ -18,6 +19,9 @@ body {
   font-family: "Rampart One", cursive;
   font-size: 20px;
   width: 100%;
+}
+#title h1{
+  margin: 0;
 }
 
 .popup {
@@ -76,12 +80,14 @@ body {
   color: #fff;
   width: 100%;
   text-align: center;
+  padding-top: 70px;
 }
 
 #canvas-container {
   position: relative;
   width: 800px;
   margin: auto;
+  padding-top: 20px;
 }
 
 #word-container {
@@ -151,4 +157,8 @@ footer {
 
 .social-links:hover {
   text-shadow: 0 0 10px #d3d3d3, 0 0 40px #9e9e9e, 0 0 80px #7d7d7d;
+}
+.noise-background {
+  z-index: -5;
+  position: absolute;
 }

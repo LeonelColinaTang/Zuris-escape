@@ -13,6 +13,13 @@
     <link rel="icon" type="image/jpg" href="./src/images/claw.jpg">
 </head>
 <body>
+    <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100vw' height='100vh' class="noise-background">
+        <filter id='n'>
+            <feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='10' stitchTiles='stitch' />
+        </filter>
+        <rect width='5000' height='5000' fill='#000' />
+        <rect width='5000' height='5000' filter="url(#n)" opacity='0.4' />
+    </svg>
     <div id="main">
         <div id="title">
             <h1>Zuri's Escape</h1>
@@ -57,6 +64,7 @@
                 </p>
             </div>
         </div>
+        
         <div id="canvas-container">
             <div id="word-container">
             </div>
@@ -71,6 +79,7 @@
             <p> Your browser doesn't suport audio</p>
         </audio>
     </div>
+    
     <footer>
         <a href="https://github.com/LeonelColinaTang" target="_blank" class="social-links">Github</a>
         <a href="https://www.linkedin.com/in/leonel-colina-455531118/" target="_blank" class="social-links">LinkedIn</a>
