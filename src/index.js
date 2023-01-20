@@ -102,7 +102,6 @@ function startGame(){
     }); 
 
 
-
 }
 
 playButton.onclick = function () {
